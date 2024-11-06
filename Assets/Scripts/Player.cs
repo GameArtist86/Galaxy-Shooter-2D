@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
     [SerializeField]
     private GameObject _laserPrefab;
+    private float _laserOffsetY = .8f;
     
     void Start()
     {
@@ -20,7 +21,8 @@ public class Player : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Instantiate(_laserPrefab, new Vector3(transform.position.x, (transform.position.y + _laserOffsetY), 0), Quaternion.identity);
+            
         }
 
     }
