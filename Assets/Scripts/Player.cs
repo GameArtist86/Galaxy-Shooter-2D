@@ -69,6 +69,12 @@ public class Player : MonoBehaviour
 
         else if (_lives <= 0)
         {
+            SpawnManager _spawnManager = GameObject.Find("SpawnManager").transform.GetComponent<SpawnManager>();
+
+            if (_spawnManager != null)
+            {
+                _spawnManager.OnPlayerDeath();
+            }
             Destroy(this.gameObject);
         }
     }
