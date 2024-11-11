@@ -23,12 +23,18 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     [SerializeField]
     private GameObject _shieldVisualizer;
+    private SpawnManager _spawnManager;
+    [SerializeField]
+    private int _score;
+    private UIManager _uiManager;
 
 
     void Start()
     {
         
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     void Update()
@@ -95,7 +101,7 @@ public class Player : MonoBehaviour
 
         else if (_lives <= 0)
         {
-            SpawnManager _spawnManager = GameObject.Find("SpawnManager").transform.GetComponent<SpawnManager>();
+
 
             if (_spawnManager != null)
             {
@@ -104,6 +110,12 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    public void AddScore(int points)
+    {
+        _score = _score + points;
+        _uiManager.UpdateScore(_score);
+    }
+
 
     public void TripleShotCollected()
     {
