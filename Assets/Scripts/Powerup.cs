@@ -40,7 +40,7 @@ public class Powerup : MonoBehaviour
                         player.SpeedBoostCollected();
                         break;
                     case 2:
-                        //player.ShieldPowerCollected();
+                        player.ShieldPowerupCollected();
                         break;
                 }
                 Destroy(this.gameObject);
