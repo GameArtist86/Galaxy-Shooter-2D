@@ -37,7 +37,7 @@ public class Powerup : MonoBehaviour
                         player.TripleShotCollected();
                         break;
                     case 1:
-                        //player.SpeedPowerupCollected();
+                        player.SpeedBoostCollected();
                         break;
                     case 2:
                         //player.ShieldPowerCollected();
