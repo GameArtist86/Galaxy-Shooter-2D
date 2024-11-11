@@ -32,7 +32,8 @@ public class TripleShot : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            //player.TripleShotCollected();
+            Player player = other.GetComponent<Player>();
+            player.TripleShotCollected();
             Destroy(this.gameObject);
         }
     }
