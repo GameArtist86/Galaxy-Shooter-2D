@@ -17,21 +17,21 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private bool _isTripleShotActive = false;
-   
-    
+
+
     void Start()
     {
-      transform.position = new Vector3(0,0,0);
+        transform.position = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
         CalculateMovement();
-        
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-           FireLaser();
-            
+            FireLaser();
+
         }
 
     }
@@ -57,22 +57,20 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(11.2f, transform.position.y, 0);
         }
     }
-    
+
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
 
         if (_isTripleShotActive == true)
         {
-            Instantiate(_tripleShotPrefab, transform.position + new Vector3(-.76f, 0.2f, 0), Quaternion.identity); 
-        }   
+            Instantiate(_tripleShotPrefab, transform.position + new Vector3(-.76f, 0.2f, 0), Quaternion.identity);
+        }
 
-        else 
+        else
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.3f, 0), Quaternion.identity);
         }
-
-        
 
     }
     public void Damage()
@@ -93,12 +91,12 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
     public void TripleShotCollected()
     {
         _isTripleShotActive = true;
-        StartCoroutine (TripleShotPowerDownRoutine());
+        StartCoroutine(TripleShotPowerDownRoutine());
     }
-
 
     IEnumerator TripleShotPowerDownRoutine()
     {
@@ -108,8 +106,8 @@ public class Player : MonoBehaviour
             _isTripleShotActive = false;
         }
     }
-    
-    
-        
-    
+
+
+
+
 }
