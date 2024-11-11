@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -7,7 +8,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
-    private GameObject _tripleShotPowerupPrefab;
+    private GameObject[] _powerups;
     [SerializeField]
     private GameObject _enemyContainer;
 
@@ -35,7 +36,8 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             yield return new WaitForSeconds(Random.Range(3, 7));
-            GameObject newPowerup = Instantiate(_tripleShotPowerupPrefab, new Vector3((Random.Range(-11f, 11f)), 7.5f, 0), Quaternion.identity);
+            int randomPowerup = Random.Range(0, 2);
+            Instantiate(_powerups[randomPowerup], new Vector3((Random.Range(-11f, 11f)), 7.5f, 0), Quaternion.identity);
         }
     }
 
