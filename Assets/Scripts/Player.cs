@@ -97,6 +97,7 @@ public class Player : MonoBehaviour
         if (_lives > 0)
         {
             _lives--;
+            _uiManager.UpdateLives(_lives);
         }
 
         else if (_lives <= 0)
