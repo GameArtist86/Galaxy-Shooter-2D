@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -90,8 +91,8 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-           _shieldVisualizer.SetActive(false);
-           _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+            _isShieldActive = false;
             return;
         }
         if (_lives > 0)
@@ -108,13 +109,14 @@ public class Player : MonoBehaviour
             {
                 _spawnManager.OnPlayerDeath();
             }
-            
+
             if (_uiManager != null)
             {
                 _uiManager.GameOver();
             }
 
             Destroy(this.gameObject);
+            
         }
     }
     public void AddScore(int points)
@@ -142,7 +144,7 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
     }
-   
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         while (_isTripleShotActive)
@@ -161,8 +163,10 @@ public class Player : MonoBehaviour
             _isSpeedBoostActive = false;
         }
     }
-   
-
 
 
 }
+    
+
+
+
