@@ -12,11 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _rightEngineDamage;
-    [SerializeField]
-    private GameObject _leftEngineDamage;
-    [SerializeField]
-    private GameObject _centerEngineDamage;
+    private GameObject _rightEngineDamage, _leftEngineDamage, _centerEngineDamage;
     [SerializeField]
     private float _fireRate = .2f;
     private float _canFire = -1;
