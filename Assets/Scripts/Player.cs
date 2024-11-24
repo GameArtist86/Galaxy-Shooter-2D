@@ -12,6 +12,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _rightEngineDamage;
+    [SerializeField]
+    private GameObject _leftEngineDamage;
+    [SerializeField]
+    private GameObject _centerEngineDamage;
+    [SerializeField]
     private float _fireRate = .2f;
     private float _canFire = -1;
     [SerializeField]
@@ -32,8 +38,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
         transform.position = new Vector3(0, 0, 0);
+        _rightEngineDamage.SetActive(false);
+        _leftEngineDamage.SetActive(false);
+        _centerEngineDamage.SetActive(false);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
@@ -45,7 +53,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
-
         }
 
     }
@@ -99,6 +106,21 @@ public class Player : MonoBehaviour
         {
             _lives--;
             _uiManager.UpdateLives(_lives);
+            
+            if (_lives == 2)
+            {
+                _rightEngineDamage.SetActive(true);
+            }
+
+            if ( _lives == 1)
+            {
+                _leftEngineDamage.SetActive(true);
+            }
+
+            if( _lives == 0)
+            {
+                _centerEngineDamage.SetActive(true);
+            }
         }
 
         else if (_lives <= 0)
