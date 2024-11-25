@@ -12,9 +12,15 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager;
 
+
     private void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if(_spawnManager == null)
+        {
+            Debug.LogError("SpawnManager in Asteroid script is NULL");
+        }
+      
     }
 
     private void Update()
@@ -28,6 +34,7 @@ public class Asteroid : MonoBehaviour
         if (laser != null && other.gameObject.tag == "Laser")
         {
             GameObject newExplosion = Instantiate(_explosion, transform.position + new Vector3(), Quaternion.identity);
+         
             Destroy(newExplosion, 2.5f);
             Destroy(other.gameObject);
             _spawnManager.StartSpawning();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,6 +31,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
     private UIManager _uiManager;
+    [SerializeField]
+    private AudioClip _laserAudio;
+    [SerializeField]
+    private AudioClip _explosionAudio;
+    private AudioSource _audioSource;
+
 
 
     void Start()
@@ -40,8 +47,27 @@ public class Player : MonoBehaviour
         _centerEngineDamage.SetActive(false);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-    }
+        _audioSource = GetComponent<AudioSource>();
 
+        if (_spawnManager == null)
+        {
+            Debug.LogError("SpawnManager is NULL");
+        }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager is NULL");
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("Player AudioSource is NULL");
+        }
+        else
+        {
+            _audioSource.clip = _laserAudio;
+        }
+    }
     void Update()
     {
         CalculateMovement();
@@ -89,34 +115,44 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.3f, 0), Quaternion.identity);
         }
 
+        _audioSource.Play();
+
     }
     public void Damage()
     {
+
+
         if (_isShieldActive == true)
         {
             _shieldVisualizer.SetActive(false);
             _isShieldActive = false;
             return;
         }
+        else
+        {
+            _audioSource.PlayOneShot(_explosionAudio);
+        }
+
         if (_lives > 0)
         {
             _lives--;
             _uiManager.UpdateLives(_lives);
-            
+
             if (_lives == 2)
             {
                 _rightEngineDamage.SetActive(true);
             }
 
-            if ( _lives == 1)
+            if (_lives == 1)
             {
                 _leftEngineDamage.SetActive(true);
             }
 
-            if( _lives == 0)
+            if (_lives == 0)
             {
                 _centerEngineDamage.SetActive(true);
             }
+
         }
 
         else if (_lives <= 0)
@@ -134,7 +170,7 @@ public class Player : MonoBehaviour
             }
 
             Destroy(this.gameObject);
-            
+
         }
     }
     public void AddScore(int points)
@@ -181,6 +217,7 @@ public class Player : MonoBehaviour
             _isSpeedBoostActive = false;
         }
     }
+
 
 
 }

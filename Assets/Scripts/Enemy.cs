@@ -9,9 +9,11 @@ public class Enemy : MonoBehaviour
     private Player _player;
     [SerializeField]
     private Animator _animator;
-    [SerializeField] 
+    [SerializeField]
     private Collider2D _collider;
-    
+    [SerializeField]
+    private AudioSource _audioSource;
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -23,24 +25,30 @@ public class Enemy : MonoBehaviour
         if (_animator == null)
         {
             Debug.LogError("_animation is NULL");
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                Debug.LogError("Enemy AudioSource is NULL");
+            }
         }
-        _collider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y < -8f)
         {
-            transform.position = new Vector3(Random.Range(-11f,11f), 8f, 0);
+            transform.position = new Vector3(Random.Range(-11f, 11f), 8f, 0);
         }
     }
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.tag == "Player") 
+        if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
 
@@ -50,6 +58,7 @@ public class Enemy : MonoBehaviour
             }
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0f;
+            _audioSource.Play();
             Destroy(_collider);
             Destroy(this.gameObject, 2.4f);
         }
@@ -62,6 +71,7 @@ public class Enemy : MonoBehaviour
             }
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0f;
+            _audioSource.Play();
             Destroy(_collider);
             Destroy(other.gameObject);
             Destroy(this.gameObject, 2.4f);
